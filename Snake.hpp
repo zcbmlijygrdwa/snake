@@ -41,7 +41,7 @@ class Snake
 
         bool tryEat(Location* food_loc)
         {
-            if(abs(prev_loc.x-food_loc->x)+abs(prev_loc.y-food_loc->y)<=5)
+            if(abs(prev_loc.x-food_loc->x)+abs(prev_loc.y-food_loc->y)<=size)
             {
                 eat();
                 return true;

@@ -31,8 +31,14 @@ void update() {
     S2D_DrawCircle(food_loc.x, food_loc.y, snake->size, 16,   1,   0.2,   0.4, 0.6);
     if(snake->tryEat(&food_loc))
 {
-            food_loc.x = rand() % 400 + 1;;
-            food_loc.y = rand() % 400 + 1;;
+            food_loc.x = rand() % 400 + 1;
+            food_loc.y = rand() % 400 + 1;
+            
+            window->fps_cap = 2*snake->joint_q.size();
+        
+            if(window->fps_cap>=60)
+                window->fps_cap = 60;
+
 }
     snake->update();
 }
@@ -94,7 +100,6 @@ void on_mouse(S2D_Event e) {
             food_loc.x = rand() % 400 + 1;;
             food_loc.y = rand() % 400 + 1;;
 
-            window->fps_cap = 2*snake->joint_q.size();
             if (e.dblclick)
                 puts("Double click");
             break;
