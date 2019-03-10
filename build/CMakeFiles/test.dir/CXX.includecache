@@ -25,6 +25,8 @@ Location.hpp
 /home/zhenyu/snake/Location.hpp
 Snake.hpp
 /home/zhenyu/snake/Snake.hpp
+stdlib.h
+-
 
 /usr/local/include/simple2d.h
 stdbool.h

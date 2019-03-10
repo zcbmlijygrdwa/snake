@@ -5,10 +5,15 @@
 #include "Location.hpp"
 #include "Snake.hpp"
 
+
+#include <stdlib.h>     /* srand, rand */
+
 using namespace std;
 
 Snake* snake = NULL;
 S2D_Window *window;
+
+Location food_loc;
 
 void update() {
 
@@ -22,6 +27,13 @@ void update() {
         //cout<<"loc.y = "<<loc.y<<endl;
         S2D_DrawCircle(loc.x, loc.y, snake->size, 16,   1,   1,   1, 0.6);
     }
+
+    S2D_DrawCircle(food_loc.x, food_loc.y, snake->size, 16,   1,   0.2,   0.4, 0.6);
+    if(snake->tryEat(&food_loc))
+{
+            food_loc.x = rand() % 400 + 1;;
+            food_loc.y = rand() % 400 + 1;;
+}
     snake->update();
 }
 
@@ -77,7 +89,11 @@ void on_mouse(S2D_Event e) {
         case S2D_MOUSE_DOWN:
             puts("Mouse down");
             print_mouse_button(e.button);
-            snake->eat();
+            //snake->eat();
+
+            food_loc.x = rand() % 400 + 1;;
+            food_loc.y = rand() % 400 + 1;;
+
             window->fps_cap = 2*snake->joint_q.size();
             if (e.dblclick)
                 puts("Double click");
@@ -113,10 +129,14 @@ void on_mouse(S2D_Event e) {
 int main(int iArgc, char** cppArgv)
 {
 
+/* initialize random seed: */
+  srand (time(NULL));
+
     snake = new Snake(500,500);
+    
+    food_loc = Location(300,200);
 
     S2D_Diagnostics(true);
-
 
 
     window = S2D_CreateWindow("Simple 2D — Test Card", 600, 500, update, render, S2D_RESIZABLE);
