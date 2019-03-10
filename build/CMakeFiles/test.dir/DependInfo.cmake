@@ -17,9 +17,10 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/eigen3"
   "/usr/include/suitesparse"
+  "/usr/local/include"
+  "/usr/include/SDL2"
   "/opt/ros/kinetic/include/opencv-3.3.1-dev"
   "/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"
-  "/usr/local/include"
   )
 
 # Targets to which this target links.

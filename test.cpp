@@ -5,6 +5,9 @@
 
 #include <unistd.h>
 
+#include <simple2d.h>
+
+
 using namespace std;
 
 
@@ -36,6 +39,8 @@ class Snake
 
         Location prev_loc;
 
+        int size;
+
         map<int,map<int,Location> > joint_map;
 
         int direction;
@@ -50,6 +55,8 @@ class Snake
         {
             this->maxX = maxX;
             this->maxY = maxY;
+
+            size = 10;
 
             direction = 0;
             int i = 4;
@@ -219,61 +226,48 @@ class Snake
 
 };
 
+Snake* snake = NULL;
 
-void Clrscr()
-{
-    cout<<"\033[2J\033[1;1H";
+void update() {
+
+    queue<Location> temp_q = snake->joint_q;
+
+    while(temp_q.size()>0)
+    {
+        Location loc = temp_q.front();
+        temp_q.pop();
+        cout<<"loc.x = "<<loc.x<<endl;
+        cout<<"loc.y = "<<loc.y<<endl;
+
+        S2D_DrawCircle(loc.x, loc.y, snake->size, 16,   1,   1,   1, 0.6);
+    }
+
+    snake->update();
+
+    //S2D_DrawCircle(50, 50, 10, 16,   1,   1,   1, 0.6);
 }
 
+void render() {
+}
 
-
-void printSnake(Snake* snake)
-{
-    Clrscr();
-    string s = "";
-    s = "";
-    for(int j = 0 ; j < snake->maxX ; j++)
-    {
-        for(int k = 0 ; k < snake->maxY ; k++)
-        {
-            //cout<<"snake->hasLocation("<<j<<","<<k<<") = "<<snake->hasLocation(j,k)<<endl;
-            if(snake->hasLocation(k,j))
-            {
-                s += " ";
-            }
-            else
-            {
-                s += "*";
-            }
-        }
-        s+="\n"; 
-    }
-    cout<<s;
-} 
-
-int main()
+int main(int iArgc, char** cppArgv)
 {
 
-    Snake* snake = new Snake(10,10);
-
-    for(int frame = 0 ; frame < 100 ; frame++)
-    {
-        if(frame == 3 || frame == 4 )
-            snake->eat();
-       
-        if(frame == 8)
-            snake->direction = 1;
- 
-        printSnake(snake);
-
-        //after print, update snake
-        snake->update();
+    snake = new Snake(500,500);
 
 
-        cout<<"joint_q.size() = "<<snake->joint_q.size()<<endl;
-        usleep(1000000);
+    S2D_Diagnostics(true);
 
-    }
+    S2D_Window *window;
+
+
+    window = S2D_CreateWindow("Simple 2D — Test Card", 600, 500, update, render, S2D_RESIZABLE);
+
+
+    S2D_Show(window);
+
+    S2D_FreeWindow(window);
+
     return 0;
 }
 
