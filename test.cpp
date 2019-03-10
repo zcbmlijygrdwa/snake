@@ -88,6 +88,56 @@ class Snake
             }
         }
 
+        void eat()
+        {
+            Location new_loc = Location(prev_loc);
+            cout<<"new_loc.y old = "<<new_loc.y<<endl;
+            if(direction == 0)
+            {
+                if(new_loc.y==0)
+                    new_loc.y = maxY-1;
+                else
+                    new_loc.y--;
+            }
+            else if(direction == 1)
+            {
+                if(new_loc.x==maxX-1)
+                    new_loc.x = 0;
+                else
+                    new_loc.x++;
+            }
+            else if(direction == 2)
+            {
+                if(new_loc.y==maxY-1)
+                    new_loc.y = 0;
+                else
+                    new_loc.y++;
+            }
+            else if(direction == 3)
+            {
+                if(new_loc.x==0)
+                    new_loc.x = maxX-1;
+                else
+                    new_loc.x--;
+            }
+            cout<<"new_loc = ["<<new_loc.x<<","<<new_loc.y<<"]"<<endl;
+
+            //push new joint into queue
+            joint_q.push(new_loc);
+
+            prev_loc = new_loc;
+
+            map<int,Location> temp_map;
+
+            if(joint_map.find(new_loc.x) != joint_map.end())
+            {
+                temp_map = joint_map[new_loc.x];
+            }
+
+            temp_map[new_loc.y] = new_loc;
+
+            joint_map[new_loc.x] = temp_map;
+        }
         void update()
         {
             Location new_loc = Location(prev_loc);
@@ -127,29 +177,8 @@ class Snake
 
             prev_loc = new_loc;
 
-            //remove tail
-            Location tail = joint_q.front();
 
-            cout<<"tail.x = "<<tail.x<<", tail.y = "<<tail.y<<endl;
-            map<int,Location> temp_map = joint_map[tail.x];
-            cout<<"temp_map.size() = "<<temp_map.size()<<endl;
-            temp_map.erase(tail.y);
-            cout<<"after erase temp_map.size() = "<<temp_map.size()<<endl;
-
-            if(temp_map.size()>0)
-            {
-                joint_map[tail.x] = temp_map;
-            }
-            else
-            {
-                joint_map.erase(tail.x);
-            }
-            //pop tail
-            joint_q.pop();
-            tail = joint_q.front();
-            cout<<"after pop tail.x = "<<tail.x<<", tail.y = "<<tail.y<<endl;
-
-
+            map<int,Location> temp_map;
 
             if(joint_map.find(new_loc.x) != joint_map.end())
             {
@@ -164,6 +193,28 @@ class Snake
 
             joint_map[new_loc.x] = temp_map;
 
+
+
+            //remove tail
+            Location tail = joint_q.front();
+            temp_map = joint_map[tail.x];
+            cout<<"temp_map.size() = "<<temp_map.size()<<endl;
+            temp_map.erase(tail.y);
+            cout<<"after erase temp_map.size() = "<<temp_map.size()<<endl;
+
+            if(temp_map.size()>0)
+            {
+                joint_map[tail.x] = temp_map;
+            }
+            else
+            {
+                joint_map.erase(tail.x);
+            }
+
+            //pop tail
+            joint_q.pop();
+            tail = joint_q.front();
+            cout<<"after pop tail.x = "<<tail.x<<", tail.y = "<<tail.y<<endl;
         }
 
 };
@@ -207,10 +258,18 @@ int main()
 
     for(int frame = 0 ; frame < 100 ; frame++)
     {
+        if(frame == 3 || frame == 4 )
+            snake->eat();
+       
+        if(frame == 8)
+            snake->direction = 1;
+ 
         printSnake(snake);
 
         //after print, update snake
         snake->update();
+
+
         cout<<"joint_q.size() = "<<snake->joint_q.size()<<endl;
         usleep(1000000);
 
