@@ -1,0 +1,93 @@
+#include <iostream>
+#include <unistd.h>
+
+using namespace std;
+
+
+
+class Location
+{
+    public:
+        int x;
+        int y;
+        Location()
+        {
+            x = 0;
+            y = 0;
+        }
+
+        Location(int a, int b)
+        {
+            x = a;
+            y = b;
+        }
+};
+
+
+
+class Snake
+{
+    public:
+        queue<Location> joint_q;
+
+        int direction;
+        // direction = 0 : up
+        // direction = 1 : right
+        // direction = 2 : down
+        // direction = 3 : left
+
+        Snake()
+        {
+         direction = 0;   
+        }
+
+         
+
+        bool hasLocation(int i, int j)
+{
+        
+}
+
+};
+
+
+void Clrscr()
+{
+    cout<<"\033[2J\033[1;1H";
+}
+
+
+
+void printSnake(Snake snake)
+{
+    Clrscr();
+    s = "";
+    for(int j = 0 ; j < 10 ; j++)
+    {
+        for(int k = 0 ; k < 10 ; k++)
+        {
+            if(snake->hasLocation(j,k))
+            {
+                s += " ";
+            }
+            else
+            {
+                s += "*";
+            }
+        }
+        s+="\n"; 
+    }
+    cout<<s;
+    usleep(100000);
+} 
+
+int main()
+{
+    string s = "";
+    for(int frame = 0 ; frame < 100 ; frame++)
+    {
+
+    }
+    return 0;
+}
+
