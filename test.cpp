@@ -6,26 +6,35 @@ using namespace std;
 
 void Clrscr()
 {
-cout<<"\033[2J\033[1;1H";
+    cout<<"\033[2J\033[1;1H";
 }
 
 int main()
 {
     string s = "";
+    for(int frame = 0 ; frame < 100 ; frame++)
+    {
 
-        for(int i = 0 ; i < 10 ; i++)
+        Clrscr();
+        s = "";
+        for(int j = 0 ; j < 10 ; j++)
         {
-
-            Clrscr();
-
-            s = "[";
-            s += to_string(i);
-            s += "]";
-            cout<<s<<endl;
-
-
-            usleep(1000000);
+            for(int k = 0 ; k < 10 ; k++)
+            {
+                if(j*10+k==frame)
+                {
+                    s += " ";
+                }
+                else
+                {
+                    s += "*";
+                }
+            }
+        s+="\n"; 
         }
+        cout<<s;
+        usleep(100000);
+    }
     return 0;
 }
 
