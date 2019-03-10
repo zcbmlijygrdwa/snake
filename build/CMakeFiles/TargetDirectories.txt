@@ -1,0 +1,3 @@
+/home/zhenyu/snake/build/CMakeFiles/edit_cache.dir
+/home/zhenyu/snake/build/CMakeFiles/test.dir
+/home/zhenyu/snake/build/CMakeFiles/rebuild_cache.dir
