@@ -6,17 +6,25 @@
 
 #IncludeRegexTransform: 
 
-/home/zhenyu/snake/test.cpp
+/home/zhenyu/snake/Location.hpp
+
+/home/zhenyu/snake/Snake.hpp
 iostream
 -
 queue
 -
 map
 -
-unistd.h
+
+/home/zhenyu/snake/test.cpp
+iostream
 -
 simple2d.h
 -
+Location.hpp
+/home/zhenyu/snake/Location.hpp
+Snake.hpp
+/home/zhenyu/snake/Snake.hpp
 
 /usr/local/include/simple2d.h
 stdbool.h
